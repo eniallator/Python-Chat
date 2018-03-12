@@ -13,8 +13,7 @@ class Client:
 
     def send_msg(self):
         while True:
-            prefix = '<' + self.nickname + '>: '
-            self.sock.send(bytes(prefix + input(''), 'utf-8'))
+            self.sock.send(bytes(input(''), 'utf-8'))
     
 
     def run(self):

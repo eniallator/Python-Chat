@@ -14,11 +14,13 @@ class Server:
 
     def handler(self, ctn, address):
         while True:
-            data = ctn.recv(1024)
-            for connection in self.connections:
-                if connection != ctn:
-                    connection.send(bytes(data))
-            if not data:
+            try:
+                data = ctn.recv(1024)
+                print(str(address[0]) + ':' + str(address[1]) + ' sent: ' + str(data, 'utf-8'))
+                for connection in self.connections:
+                    if connection != ctn:
+                        connection.send(bytes(data))
+            except ConnectionResetError:
                 print(str(address[0]) + ':' + str(address[1]) + ' disconnected')
                 self.connections.remove(ctn)
                 ctn.close()
